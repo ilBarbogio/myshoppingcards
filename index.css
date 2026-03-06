@@ -1,0 +1,251 @@
+@keyframes flip-card{
+  0% {width:90vw}
+  100% {width:0}
+}
+@keyframes unflip-card{
+  0% {width:0}
+  100% {width:90vw}
+}
+@keyframes enlarge-card{
+  0% { transform:scale(1,1);}
+  100% { transform:scale(2,2);}
+}
+@keyframes shrink-card{
+  0% { transform:scale(2,2);}
+  100% { transform:scale(1,1);}
+}
+@keyframes disappear{
+  0% {opacity:1}
+  100% {opacity:0}
+}
+
+body{
+  margin:0;
+  padding:0;
+}
+
+button{
+  width:2rem;
+  height:2rem;
+  border-radius: .25rem;
+}
+
+#main-outlet{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .hidden{
+    display:none;
+  }
+
+  &.menu{
+    --card-width:40vw;
+    --card-height:25vw;
+    box-sizing: border-box;
+    padding:1rem;
+    margin:4rem 0;
+    display:grid;
+    grid-template-columns: repeat(2, var(--card-width));
+    gap:1rem;
+    align-content: flex-start;
+    justify-content: center;
+    .card-container{
+      display:contents;
+    }
+
+    .card{
+      --background-color:white;
+      --foreground-color:white;
+      --text-color:white;
+      position:relative;
+      top:0;
+      left:0;
+      transform-origin: left;
+      box-sizing: border-box;
+      width:var(--card-width);
+      height:var(--card-height);
+      overflow: hidden;
+
+      border:1px solid gray;
+      border-radius:.5rem;
+
+      z-index: 0;
+
+      &:nth-child(even){
+        transform-origin: right;
+      }
+      &.grow{
+        z-index:10;
+        animation-name: enlarge-card;
+        animation-duration: .25s;
+        animation-fill-mode: forwards;
+      }
+      &.shrink{
+        z-index:10;
+        animation-name: shrink-card;
+        animation-duration: .25s;
+        animation-fill-mode: forwards;
+      }
+
+      .front,
+      .back{
+        z-index: inherit;
+        pointer-events: none;
+        position:absolute;
+        width:100%;
+        height:100%;
+
+        display:flex;
+        justify-content: center;
+        align-items: center;
+
+        opacity:1;
+        transition:opacity .25s;
+      }
+      .front{
+        background-color: var(--background-color);
+        /* background-color: var(--background-color); */
+        color: var(--text-color);
+      }
+      .back{
+        background-color: white;
+        button{
+          display:none;
+          width:1rem;
+          height:1rem;
+          font-size:50%;
+          pointer-events: all;
+          position:absolute;
+          right:.5rem;
+          top:.5rem;
+        }
+      }
+      &.grow{
+        .front{
+          opacity: 0;
+        }
+        .back button{
+          display:inline-block;
+        }
+      }
+    }
+  }
+
+  &.add-card{
+    --card-background-color:red;
+    --card-foreground-color:#ffa500;
+    --card-text-color:white;
+    .slide{
+      touch-action: none;
+      position:absolute;
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap:1rem;
+      width:100vw;
+      height:100vh;
+      top:0;
+      transition:left .5s;
+
+      form{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:.5rem;
+        .preview-card{
+          background-color: var(--card-background-color);
+          position:relative;
+          box-sizing: border-box;
+          width:90vw;
+          height: 50vw;
+          overflow: hidden;
+  
+          /* padding:1rem; */
+          border:1px solid gray;
+          border-radius:.5rem;
+  
+          display:flex;
+          justify-content: center;
+          align-items: center;
+
+          &.flip{
+            animation-duration: .25s;
+            animation-fill-mode: forwards;
+            animation-name:flip-card;
+          }
+          &.unflip{
+            animation-duration: .25s;
+            animation-fill-mode: forwards;
+            animation-name:unflip-card;
+          }
+          .front-content,
+          .back-content{
+            display:contents;
+            &.hidden{
+              display:none;
+            }
+            canvas{
+              position:absolute;
+              width:90%;
+            }
+          }
+          &:has(.back-content:not(.hidden)){
+            background-color: white;
+          }
+
+          input{
+            text-align: center;
+            color:var(--card-text-color);
+            background-color: transparent;
+            border-style: ridge;
+            border-radius:.25rem;
+            border:1px solid #ffffff;
+            outline:none;
+            &:first-child{
+              width:60%;
+              font-size:2rem;
+              transform:translate(0, -1rem);
+            }
+            &:nth-child(2){
+              width:90%;
+              font-size:1rem;
+              position:absolute;
+              bottom:.5rem;
+              left:50%;
+              transform:translate(-50%, 0);
+            }
+          }
+          button.flip{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+          }
+        }
+
+        .swatches{
+          width:100%;
+          display:flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap:1rem;
+        }
+      }
+
+      
+      button{
+        z-index: 4;
+      }
+    }
+  }
+
+}
+@media (orientation: portrait){
+  
+}
