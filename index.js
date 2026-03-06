@@ -1,6 +1,6 @@
 import { transition as mountMenu, unmount as unmountMenu } from "./scripts/menu.js"
 import { transition as mountAddCard, unmount as unmountAddCard } from "./scripts/addCard.js"
-import QrCodeLib from "../libs/qrcode.js"
+import QrCodeLib from "./libs/qrcode.js"
 export const QrCode=QrCodeLib
 
 export const outlet=document.getElementById("main-outlet")
