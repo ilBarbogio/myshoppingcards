@@ -1,0 +1,19 @@
+{
+    "name": "ElefantinoDesign's\nMyShoppingCards",
+    "short_name": "mycards-elefantino",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "display": "standalone",
+    "orientation":"portrait",
+    "scope": "./",
+    "start_url": "./",
+    "icons": [
+      {
+        "src": "assets/elefantino.svg",
+        "sizes": "any",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ],
+    "permissions":["download"]
+  }

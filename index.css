@@ -19,6 +19,10 @@
   100% {opacity:0}
 }
 
+::view-transition-image-pair(root) {
+  isolation: auto;
+}
+
 body{
   margin:0;
   padding:0;
@@ -28,6 +32,20 @@ button{
   width:2rem;
   height:2rem;
   border-radius: .25rem;
+  outline:none;
+  border:1px solid #b4b4b4;
+  background-color: transparent;
+  box-decoration-break: 0 3px 3px #a4a4a4;
+  color:#a4a4a4;
+  padding:0;
+  display:inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active{
+    border:1px solid #6e6e6e;
+    color:#6e6e6e;
+  }
 }
 
 #main-outlet{
@@ -91,6 +109,12 @@ button{
         animation-duration: .25s;
         animation-fill-mode: forwards;
       }
+      &.center{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
       .front,
       .back{
@@ -109,11 +133,26 @@ button{
       }
       .front{
         background-color: var(--background-color);
-        /* background-color: var(--background-color); */
         color: var(--text-color);
+        &.variant-1{
+          background: linear-gradient(45deg, var(--background-color) 0%,var(--background-color) 80%,var(--foreground-color) 80%, var(--foreground-color) 100%);
+        }
+        &.variant-2{
+          background: linear-gradient(-90deg, var(--background-color) 0%,var(--background-color) 80%,var(--foreground-color) 80%, var(--foreground-color) 100%);
+        }
+        &.variant-3{
+          background: linear-gradient(135deg, var(--foreground-color) 0%,var(--foreground-color) 20%,var(--background-color) 20%, var(--background-color) 100%);
+        }
+        &.variant-4{
+          background: radial-gradient(var(--foreground-color) 0%,var(--foreground-color) 40%,var(--background-color) 40%, var(--background-color) 100%);
+        }
+        &.variant-5{
+          background: radial-gradient(circle at bottom left, var(--foreground-color) 0%,var(--foreground-color) 20%,var(--background-color) 20%, var(--background-color) 100%);
+        }
       }
       .back{
         background-color: white;
+        background: white;
         button{
           display:none;
           width:1rem;
@@ -124,7 +163,18 @@ button{
           right:.5rem;
           top:.5rem;
         }
+        svg{
+          width:calc(var(--card-width) - 2rem);
+          height:calc(var(--card-height) - 2rem);
+        }
+        .code{
+          position:absolute;
+          bottom:1rem;
+          line-height: .75rem;
+        }
       }
+
+
       &.grow{
         .front{
           opacity: 0;
@@ -159,6 +209,15 @@ button{
         justify-content: center;
         align-items: center;
         gap:.5rem;
+        width:90vw;
+
+        .top-buttons{
+          width:100%;
+          margin-top:1rem;
+          display:flex;
+          justify-content: space-between;
+        }
+
         .preview-card{
           background-color: var(--card-background-color);
           position:relative;
@@ -167,7 +226,6 @@ button{
           height: 50vw;
           overflow: hidden;
   
-          /* padding:1rem; */
           border:1px solid gray;
           border-radius:.5rem;
   
@@ -185,6 +243,24 @@ button{
             animation-fill-mode: forwards;
             animation-name:unflip-card;
           }
+
+          &.variant-1{
+            background: linear-gradient(45deg, var(--card-background-color) 0%,var(--card-background-color) 80%,var(--card-foreground-color) 80%, var(--card-foreground-color) 100%);
+          }
+          &.variant-2{
+            background: linear-gradient(-90deg, var(--card-background-color) 0%,var(--card-background-color) 80%,var(--card-foreground-color) 80%, var(--card-foreground-color) 100%);
+          }
+          &.variant-3{
+            background: linear-gradient(135deg, var(--card-foreground-color) 0%,var(--card-foreground-color) 20%,var(--card-background-color) 20%, var(--card-background-color) 100%);
+          }
+          &.variant-4{
+            background: radial-gradient(var(--card-foreground-color) 0%,var(--card-foreground-color) 40%,var(--card-background-color) 40%, var(--card-background-color) 100%);
+          }
+          &.variant-5{
+            background: radial-gradient(circle at bottom left, var(--card-foreground-color) 0%,var(--card-foreground-color) 20%,var(--card-background-color) 20%, var(--card-background-color) 100%);
+          }
+
+
           .front-content,
           .back-content{
             display:contents;
@@ -196,8 +272,15 @@ button{
               width:90%;
             }
           }
+          button.open-camera{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%, -50%);
+          }
           &:has(.back-content:not(.hidden)){
             background-color: white;
+            background: white;
           }
 
           input{
@@ -234,6 +317,12 @@ button{
           display:flex;
           align-items: center;
           justify-content: flex-end;
+          gap:1rem;
+        }
+
+        .bottom-buttons{
+          margin-top:1rem;
+          display:flex;
           gap:1rem;
         }
       }

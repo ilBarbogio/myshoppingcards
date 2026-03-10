@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DocumeSweeper</title>
+  <title>MyShoppingCards</title>
+  <link rel="icon" href="/assets/elefantino.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="./index.css"/>
   <script src="./libs/barcode.min.js"></script>
 </head>
 <body>
   <template id="menu-template">
     <div class="card-container"></div>
-    <div class="card">
+    <div class="card center">
       <button class="add-new-card">+</button>
     </div>
-    <svg id="testbar"></svg>
   </template>
 
   <template id="menu-card-template">
     <div class="back">
       <svg></svg>
-      <button class="delete-card">X</button>
+      <button class="delete-card">✕</button>
+      <div class="code"></div>
     </div>
     <div class="front">
       
@@ -29,7 +31,10 @@
   <template id="add-card-template">
     <div class="slide">
       <form>
-        <button type="button" class="flip">↺</button>
+        <div class="top-buttons">
+          <button type="button" class="variant-card">v</button>
+          <button type="button" class="flip-card">↺</button>
+        </div>
         <div class="preview-card">
           <div class="front-content">
             <input name="title"/>
@@ -37,7 +42,7 @@
           </div>
           <div class="back-content hidden">
             <svg class="card-back"></svg>
-            <button class="open-camera">scatta</button>
+            <button class="open-camera">📷</button>
           </div>
         </div>
         <div class="swatches">
@@ -45,8 +50,10 @@
           <input type="color" name="card-text"/>
           <input type="color" name="card-foreground"/>
         </div>
-        <button type="submit" class="ok">ok</button>
-        <button type="button" class="cancel-add-card">cancel</button>
+        <div class="bottom-buttons">
+          <button type="submit" class="ok">✓</button>
+          <button type="button" class="cancel-add-card">✕</button>
+        </div>
       </form>
     </div>
   </template>
