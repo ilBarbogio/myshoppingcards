@@ -8,7 +8,8 @@ const data={
   foregroundColor:"#ffa500",
   textColor:"#ffffff",
   value:undefined,
-  type:undefined
+  type:undefined,
+  variant:undefined
 }
 
 export function transition(){
@@ -30,9 +31,22 @@ const setupListeners=()=>{
   outlet.querySelector(".cancel-add-card").addEventListener("click",()=>{
     mount("menu")
   })
-  outlet.querySelector("button.flip").addEventListener("click",()=>{
+  outlet.querySelector("button.variant-card").addEventListener("click",()=>{
+    let variant=""
+    for(let c of Array.from(card.classList)) if(c.startsWith("variant-")){
+      variant=c
+      break
+    }
+    if(variant=="") card.classList.add("variant-1")
+    else{
+      card.classList.remove(variant)
+      const max=5
+      const n=variant.replace("variant-","")
+      if(n<max) card.classList.add(`variant-${+n+1}`)
+    }
+  })
+  outlet.querySelector("button.flip-card").addEventListener("click",()=>{
     if(!card.classList.contains("flip")) card.classList.add("flip")
-
   })
   card.addEventListener("animationend",(ev)=>{
     if(ev.animationName=="flip-card"){
@@ -89,6 +103,21 @@ const collectData=async (ev)=>{
   data.textColor=formData.get("card-text")
   data.title=formData.get("title")
   data.title=formData.get("title")
+
+  
+  //variant
+  let variant=""
+  let card=outlet.querySelector(".preview-card")
+  for(let c of Array.from(card.classList)) if(c.startsWith("variant-")){
+    variant=c
+    break
+  }
+  if(variant=="") data.variant=undefined
+  else{
+    const n=variant.replace("variant-","")
+    data.variant=n
+  }
+  
   if(data.value && data.format && data.title){
     const res=await saveCard(data)
     if(res) mount("menu")

@@ -41,9 +41,10 @@ function createCard(c){
   const front=card.querySelector(".front")
   
   front.innerHTML=c.title
-  front.style.setProperty("background-color",c.backgroundColor)
-  front.style.setProperty("foreround-color",c.foregroundColor)
-  front.style.setProperty("text-color",c.textColor)
+  front.style.setProperty("--background-color",c.backgroundColor)
+  front.style.setProperty("--foreround-color",c.foregroundColor)
+  front.style.setProperty("--text-color",c.textColor)
+  if(c.variant) front.classList.add(`variant-${c.variant}`)
   card.append(front)
 
   const backSvg=card.querySelector(".back svg")
@@ -54,6 +55,12 @@ function createCard(c){
   })
   card.addEventListener("click",(ev)=>{
     if(!ev.target.classList.contains("grow")){
+      const cards=outlet.querySelectorAll(".card.grow")
+      for(let crd of cards){
+        crd.classList.remove("grow")
+        crd.classList.add("srink")
+      }
+
       ev.target.classList.add("grow")
       ev.target.classList.remove("shrink")
       if(backSvg){
@@ -86,7 +93,11 @@ const drawBarcode=(svgQuery,format,value)=>{
     case "qr_code":
       const matrix = QrCode.generate(value)
       const svgContent = QrCode.render('svg', matrix)
-      document.querySelector(svgQuery).innerHTML = svgContent
+      const svg=document.querySelector(svgQuery)
+      svg.innerHTML = svgContent
+      const codeDisplay=svg.parentNode.querySelector(".code")
+      console.log(svg,svg.parentNode,codeDisplay,outlet)
+      codeDisplay.innerHTML=value
       break
     default: break
   }
